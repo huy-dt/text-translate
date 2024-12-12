@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+
+	<script type="importmap">
+	  {
+	    "imports": {
+	      "cdn/": "https://cdn.skypack.dev/"
+	    }
+	  }
+	</script>
+	<script type="module" src="https://cdn.skypack.dev/google-translate-api-browser"></script>
+</head>
+<body>
+
+	<textarea id="input"></textarea>
+	<textarea id="result"></textarea>
+
+	<script type="module">
+		let i_input = document.getElementById('input');
+		let i_result = document.getElementById('result');
+		function _translate(e){
+			let value = i_input.value;
+			let result = value.match(/\p{Script=Han}+/gu).join("\n");
+			i_result.value = result;
+		}
+
+		i_input.onchange = _translate;
+
+		import { translate } from "cdn/google-translate-api-browser";
+		translate("Je ne mangé pas six jours", { to: "en", corsUrl: "http://localhost/" })
+		.then(res => {
+		// I do not eat six days
+		console.log(res.text)
+		})
+		.catch(err => {
+		console.error(err);
+		});
+	</script>
+
+</body>
+</html>
